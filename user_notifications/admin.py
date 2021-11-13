@@ -1,17 +1,12 @@
 from django.contrib import admin
-from user_notifications.models import Reminder, Rule
+from user_notifications.models import Notification
 
 # Register your models here.
 ###############
 # MODEL ADMINS
 ###############
-class ReminderAdmin(admin.ModelAdmin):
-    fields = ('active', 'name', 'sites', 'users', 'message_type', 'message')
+class NotificationAdmin(admin.ModelAdmin):
+    fields = ('active', 'name', 'sites', 'display_type', 'message', 'rules')
 
 
-# class RuleAdmin(admin.ModelAdmin):
-#     list_display = ('__all__')
-
-
-admin.site.register(Reminder, ReminderAdmin)
-admin.site.register(Rule)
+admin.site.register(Notification, NotificationAdmin)
