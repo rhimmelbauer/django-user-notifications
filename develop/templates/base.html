@@ -57,15 +57,45 @@
 
     {% if messages %}
       {% for message in messages %}
-      <div class="alert alert-dismissible {% if message.tags %} alert-{{ message.tags }} {% endif %}fade show">
-          <a class="close" data-dismiss="alert">×</a>
-          {{ message }}
-      </div>
+        {% if message.meta.display_type == 200 %}
+        <div id="notification_modal" class="modal" tabindex="-1">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title">{{ message.meta.title}}</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                  <p>{{ message.meta.description}}</p>
+                </div>
+                <div class="modal-footer">
+                    <form action="{% url message.meta.accept_url %}" method="post">
+                        {% csrf_token %}
+                        <input type="hidden" name="pk" value="{{message.meta.pk}}">
+                        <button type="submit" class="btn btn-success">{{message.meta.accept_button}}</button>
+                    </form>
+                    <form action="{% url message.meta.decline_url %}" method="post">
+                        {% csrf_token %}
+                        <input type="hidden" name="pk" value="{{message.meta.pk}}">
+                        <button type="submit" class="btn btn-success">{{message.meta.decline_button}}</button>
+                    </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        {% else %}
+        <div class="alert alert-dismissible {% if message.tags %} alert-{{ message.tags }} {% endif %}fade show">
+            <a class="close" data-dismiss="alert">×</a>
+            {{ message }}
+        </div>
+        {% endif %}
       {% endfor %}
     {% endif %}
 
     {% block content %}
-    Reminders Base HTML Template
+    Notifications Base HTML Template
     {% endblock %}
 
     <footer class="pt-4 my-md-5 pt-md-5 border-top">
@@ -116,6 +146,9 @@
   setTimeout(function () {
       $(".alert").slideUp(500);
   }, 3000);
+  $(document).ready(function() {
+    $("#notification_modal").modal("show")
+})
   </script>
 
 {% block extra_js %}{% endblock %}
