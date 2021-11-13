@@ -3,7 +3,7 @@ django-user-notifications is an extention of django-user-messages that extends t
 
 The goal of the project is for a developer to create user messages with a set of rules.
 
-Eg. You need a user to accept new terms of service for your site. You should be able to create that reminder every day, every hour, every login until they accept the terms for which the reminder will cease to appear. 
+Eg. You need a user to accept new terms of service for your site. You should be able to create that notification every day, every hour, every login until they accept the terms for which the notification will cease to appear. 
 
 ## Features
 - Create per site and or per user messages
