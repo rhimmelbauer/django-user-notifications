@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block content %}
+<h2>Notifications</h2>
+
+<div class="card-deck mb-3 text-center">
+
+    {% for item in object_list %}
+    <div class="card mb-4 shadow-sm">
+        <div class="card-header">
+            <h4 class="my-0 font-weight-normal">{{ item.name }}</h4>
+        </div>
+        <div class="card-body">
+        </div>
+    </div>
+    {% endfor %}
+
+</div>
+
+{% endblock %}
