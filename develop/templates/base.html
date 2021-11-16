@@ -109,6 +109,9 @@
   setTimeout(function () {
       $(".alert").slideUp(500);
   }, 3000);
+  $(document).ready(function () {
+        $("#notification_modal").modal("show")
+    })
   </script>
 
 {% block extra_js %}{% endblock %}

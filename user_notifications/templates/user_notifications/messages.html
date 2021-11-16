@@ -31,17 +31,14 @@
         {% else %}
         <div class="alert alert-dismissible {% if message.tags %} alert-{{ message.tags }} {% endif %}fade show">
             <a class="close" data-dismiss="alert">×</a>
-            {{ message.meta.description }}
+            {% if message.meta.description %}
+                {{ message.meta.description }}
+            {% else %}
+                {{ message }}
+            {% endif %}
+            
         </div>
         {% endif %}
     {% endfor %}
 {% endif %}
 
-
-{% block extra_js %}
-<script>
-    $(document).ready(function () {
-        $("#notification_modal").modal("show")
-    })
-</script>
-{% endblock %}
