@@ -40,7 +40,7 @@ class Notification(models.Model):
     objects = models.Manager()
     on_site = CurrentSiteManager()
 
-    def add_user_message(self, user):
+    def add_user_message(self, user, deliver_once=True):
         self.message['display_type'] = self.display_type
         self.message['pk'] = self.pk
-        user_messages.info(user, self.name, deliver_once=False, meta=self.message)
+        user_messages.info(user, self.name, deliver_once=deliver_once, meta=self.message)

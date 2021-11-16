@@ -1,13 +1,10 @@
 from django.http.response import Http404
-from django.shortcuts import render, redirect
+from django.shortcuts import redirect
 from django.utils import timezone
-import user_messages
-from user_messages.models import Message
 from django.views import View
 from django.utils import timezone
-from user_messages.models import Message
-from user_notifications import notifications
 
+from user_messages.models import Message
 from .models import Notification
 
 # Create your views here.

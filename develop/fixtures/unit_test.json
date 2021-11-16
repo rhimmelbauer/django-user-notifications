@@ -14,5 +14,137 @@
         "domain": "example_two.com",
         "name": "example_two.com"
     }
+},
+{
+    "model": "user_notifications.notification",
+    "pk": 1,
+    "fields":{
+        "name": "Single Message",
+        "active": false,
+        "sites": [1],
+        "display_type": 100,
+        "message": {
+            "title": "Single Hello",
+            "description": " Only saying hello once",
+            "accept_button": "Accept",
+            "accept_url": "",
+            "decline_button": "Decline",
+            "decline_url": ""
+        },
+        "start_date": null,
+        "end_date": null,
+        "rules": ["SingleMessageRule"],
+        "meta": {}
+    }
+},
+{
+    "model": "user_notifications.notification",
+    "pk": 2,
+    "fields":{
+        "name": "Until Confirm",
+        "active": false,
+        "sites": [1],
+        "display_type": 200,
+        "message": {
+            "title": "Confirm this msg",
+            "description": " User Needs to confirm this msg before it disapers",
+            "accept_button": "Accept",
+            "accept_url": "user_notifications:notification-confirm",
+            "decline_button": "Decline",
+            "decline_url": "user_notifications:notification-decline"
+        },
+        "start_date": null,
+        "end_date": null,
+        "rules": ["UserConfirmationRule"],
+        "meta": {}
+    }
+},
+{
+    "model": "user_notifications.notification",
+    "pk": 3,
+    "fields":{
+        "name": "Expire after Date",
+        "active": false,
+        "sites": [1],
+        "display_type": 200,
+        "message": {
+            "title": "Expire Message after end date",
+            "description": " This Msg will expire after the end date",
+            "accept_button": "Accept",
+            "accept_url": "user_notifications:notification-confirm",
+            "decline_button": "Decline",
+            "decline_url": "user_notifications:notification-decline"
+        },
+        "start_date": null,
+        "end_date": "2050-06-30T02:38:30Z",
+        "rules": ["EndDateRule"],
+        "meta": {}
+    }
+},
+{
+    "model": "user_notifications.notification",
+    "pk": 4,
+    "fields":{
+        "name": "Msg After Start Date",
+        "active": false,
+        "sites": [1],
+        "display_type": 100,
+        "message": {
+            "title": "After Start Date",
+            "description": "This message will only show after the start Date",
+            "accept_button": "",
+            "accept_url": "",
+            "decline_button": "",
+            "decline_url": ""
+        },
+        "start_date": "2000-06-30T02:38:30Z",
+        "end_date": null,
+        "rules": ["StartDateRule"],
+        "meta": {}
+    }
+},
+{
+    "model": "user_notifications.notification",
+    "pk": 5,
+    "fields":{
+        "name": "Msg between dates",
+        "active": false,
+        "sites": [1],
+        "display_type": 100,
+        "message": {
+            "title": "Message Between Dates",
+            "description": "This message will only show between the start and end date.",
+            "accept_button": "",
+            "accept_url": "",
+            "decline_button": "",
+            "decline_url": ""
+        },
+        "start_date": "2000-06-30T02:38:30Z",
+        "end_date": "2050-06-30T02:38:30Z",
+        "rules": ["StartDateRule", "EndDateRule"],
+        "meta": {}
+    }
+},
+{
+    "model": "user_notifications.notification",
+    "pk": 6,
+    "fields":{
+        "name": "Confirm between dates",
+        "active": false,
+        "sites": [1],
+        "display_type": 200,
+        "message": {
+            "title": "Message Shown Between Dates, must be confirmed",
+            "description": "This message will only show between the start and end date. The user should confirm",
+            "accept_button": "",
+            "accept_url": "",
+            "decline_button": "",
+            "decline_url": ""
+        },
+        "start_date": "2000-06-30T02:38:30Z",
+        "end_date": "2050-06-30T02:38:30Z",
+        "rules": ["UserConfirmationRule", "StartDateRule", "EndDateRule"],
+        "meta": {}
+    }
 }
 ]
