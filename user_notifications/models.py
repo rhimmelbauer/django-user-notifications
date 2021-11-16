@@ -1,10 +1,13 @@
-from django.conf import settings
 from django.contrib.sites.managers import CurrentSiteManager
 from django.contrib.sites.models import Site
 from django.db import models
 from django.db.models.deletion import CASCADE
+from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
 from user_messages import api as user_messages
+from user_messages.models import Message
+
+from user_notifications.rules import RuleConstructor
 
 def set_default_site_id():
     return Site.objects.get_current()
@@ -25,13 +28,27 @@ class DisplayType(models.IntegerChoices):
     MODAL = 200, _("Modal")
 
 
-# Create your models here.
 class Notification(models.Model):
+    """
+    Class that helps creating site wide notifications.
+    Notifications can be displayed as a Bootstrap Alert or as a Bootstrap Modal.
+    One can choose to show the message to the user once or on every view until the user takes action.
+    One can choose to show the message from or to a certain date with start and end date.
+    One can choose to add additional rules implemented by the developer by using the RuleBase Class
+    The notification has a JSON filed called message with the following default attributes:
+        title: <Title for the modal (Ignored by the bootstrap Alert)>
+        description: <The modal body or alert description>
+        accept_button: <Text inside the accept button in the modal (Ignored by the bootstrap Alert)>
+        accept_url: <POST path for a user if they decide to accept the notification (Ignored by the bootstrap Alert)>
+        decline_button: <Text inside the decline button in the modal (Ignored by the bootstrap Alert)>
+        accept_url: <POST path for a user if they decide to decline the notification (Ignored by the bootstrap Alert)>
+    """
     name = models.CharField(verbose_name=_("Notification Name"), blank=False, null=False, max_length=65)
     active = models.BooleanField(verbose_name=_("Active"), default=False)
     sites = models.ManyToManyField(Site, verbose_name=_("Sites"), blank=True, related_name="notifications")
     display_type = models.IntegerField(verbose_name=_("Message Type"), choices=DisplayType.choices, default=DisplayType.BOOTSTRAP_ALERT)
     message = models.JSONField(verbose_name=_("Message Content"), blank=True, null=True, default=set_default_message)
+    deliver_once = models.BooleanField(verbose_name=_("Deliver Once"), default=True)
     start_date = models.DateTimeField(_("Start Date"), blank=True, null=True, help_text=_("Notification Start Date?"))
     end_date = models.DateTimeField(_("End Date"), blank=True, null=True, help_text=_("Notification End Date?"))
     rules = models.JSONField(default=list, blank=True, null=True)
@@ -43,4 +60,24 @@ class Notification(models.Model):
     def add_user_message(self, user):
         self.message['display_type'] = self.display_type
         self.message['pk'] = self.pk
-        user_messages.info(user, self.name, deliver_once=False, meta=self.message)
+        user_messages.info(user, self.name, deliver_once=self.deliver_once, meta=self.message)
+    
+    def already_exists(self, user):
+        if Message.objects.filter(user=user, message=self.name).count():
+            return True
+        return False
+
+    def is_between_dates(self):
+        if not (self.start_date and self.end_date):
+            return True
+        elif (not self.start_date or timezone.now() > self.start_date) and (not self.end_date or timezone.now < self.end_date):
+            return True
+        return False
+
+    def apply_notifications(self, user):
+        apply_rules = []
+        for rule_name in self.rules:
+            rule = RuleConstructor.create_rule(self, rule_name, user)
+            apply_rules.append(rule.does_rule_apply())
+        if False not in apply_rules:
+            self.add_user_message(user)
