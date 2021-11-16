@@ -1,5 +1,5 @@
 from django.apps import AppConfig
-from core.signals import user_login_notifications
+from allauth.account.signals import user_logged_in
 
 
 class CoreConfig(AppConfig):
@@ -7,5 +7,5 @@ class CoreConfig(AppConfig):
     name = 'core'
 
     def ready(self) -> None:
-        from allauth.account.signals import user_logged_in
+        from core.signals import user_login_notifications
         user_logged_in.connect(user_login_notifications)
