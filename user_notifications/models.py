@@ -68,9 +68,9 @@ class Notification(models.Model):
         return False
 
     def is_between_dates(self):
-        if not (self.start_date and self.end_date):
+        if not self.start_date and not self.end_date:
             return True
-        elif (not self.start_date or timezone.now() > self.start_date) and (not self.end_date or timezone.now < self.end_date):
+        elif (not self.start_date or timezone.now() > self.start_date) and (not self.end_date or timezone.now() < self.end_date):
             return True
         return False
 

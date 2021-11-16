@@ -13,13 +13,11 @@ class RuleBaseTests(TestCase):
 
     def test_rule_name_not_implemented_error(self):
         with self.assertRaises(NotImplementedError) as error:
-            invalid_rule = NoRuleNameExample()
-        self.assertIn("passed notification variable is not a Notification type", error)
+            invalid_rule = NoRuleNameExample(None, None)
 
     def test_rule_notification_incorrect_type_implemented_error(self):
         with self.assertRaises(TypeError) as error:
             invalid_rule = DoesNotApplyRuleExample("str instead of notification", User.objects.get(pk=1))
-        self.assertIn("user cannot be None type", error)
 
     def test_does_rule_apply_not_implemented_error(self):
         with self.assertRaises(NotImplementedError):

@@ -43,7 +43,7 @@ class ApplyNotificationRulesTests(TestCase):
         notification.save()
         self.assertFalse(Message.objects.filter(user=user).count())
         apply_notification_rules(notification, user)
-        self.assertTrue(Message.objects.filter(user=user).count())
+        self.assertFalse(Message.objects.filter(user=user).count())
 
     def test_queue_notification_two_rules(self):
         user = User.objects.get(pk=1)
@@ -61,6 +61,6 @@ class ApplyNotificationRulesTests(TestCase):
         notification.save()
         self.assertFalse(Message.objects.filter(user=user).count())
         apply_notification_rules(notification, user)
-        self.assertTrue(Message.objects.filter(user=user).count())
+        self.assertFalse(Message.objects.filter(user=user).count())
 
 

@@ -41,7 +41,7 @@ def apply_notification_rules(notification, user):
         return None
 
     for rule_name in notification.rules:
-        rule = RuleConstructorBase.create_rule(notification, rule_name, user)
+        rule = CoreRuleConstructor.create_rule(notification, rule_name, user)
         apply_rules.append(rule.does_rule_apply())
 
     if False not in apply_rules:
