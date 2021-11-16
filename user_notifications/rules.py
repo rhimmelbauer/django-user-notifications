@@ -24,18 +24,6 @@ class RuleBase:
     def does_rule_apply(self):
         raise NotImplemented
 
-    def notification_exists(self):
-        if user_messages.get_messages(user=self.user):
-            return True
-        return False
-
-    def queue_notification(self):
-        if not self.notification_exists():
-            self.notification.add_user_message(self.user)
-
-    def expire_notification(self):
-        raise NotImplemented
-
     def gt(self, value):
         raise NotImplemented
 
@@ -49,11 +37,19 @@ class RuleBase:
         raise NotImplemented
 
 
-class ExampleEvenRule(RuleBase):
-    RULE_NAME = "ExampleEvenRule"
+class OddRuleExample(RuleBase):
+    RULE_NAME = "OddRuleExample"
     
     def does_rule_apply(self):
         if self.user.pk % 2:
+            return  True
+        return False
+
+class RossRuleExample(RuleBase):
+    RULE_NAME = "RossRuleExample"
+    
+    def does_rule_apply(self):
+        if self.user.last_name == "Ross":
             return  True
         return False
 
@@ -61,11 +57,20 @@ class ExampleEvenRule(RuleBase):
 class RuleConstructor:
 
     def create_rule(notification, rule_name, user):
-        if rule_name == ExampleEvenRule.RULE_NAME:
-            return ExampleEvenRule(notification, user)
+        if rule_name == OddRuleExample.RULE_NAME:
+            return OddRuleExample(notification, user)
         else:
             raise NotImplemented
 
+def apply_notification_rules(notification, user):
+    apply_rules = []
+
+    for rule_name in notification.rules:
+        rule = RuleConstructor.create_rule(notification, rule_name, user)
+        apply_rules.append(rule.does_rule_apply())
+
+    if False not in apply_rules:
+        notification.add_user_message(user)
 
 
 def check_for_new_notifications(site, user):
@@ -78,5 +83,5 @@ def check_for_new_notifications(site, user):
         ]
 
     for notification in notifications_to_process:
-        notification.process_rules(user)
+        apply_notification_rules(notification, user)
     

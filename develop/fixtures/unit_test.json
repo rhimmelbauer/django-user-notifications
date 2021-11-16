@@ -1,18 +1,157 @@
 [
-{
-    "model": "sites.site",
-    "pk": 1,
-    "fields": {
-        "domain": "example.com",
-        "name": "example.com"
+    {
+        "model": "sites.site",
+        "pk": 1,
+        "fields": {
+            "domain": "example.com",
+            "name": "example.com"
+        }
+    },
+    {
+        "model": "sites.site",
+        "pk": 2,
+        "fields": {
+            "domain": "example_two.com",
+            "name": "example_two.com"
+        }
+    },
+    {
+        "model": "user_notifications.notification",
+        "pk": 1,
+        "fields":{
+            "name": "Single Message",
+            "active": false,
+            "deliver_once": true,
+            "sites": [1],
+            "display_type": 100,
+            "message": {
+                "title": "Single Hello",
+                "description": " Only saying hello once",
+                "accept_button": "Accept",
+                "accept_url": "",
+                "decline_button": "Decline",
+                "decline_url": ""
+            },
+            "start_date": null,
+            "end_date": null,
+            "rules": [],
+            "meta": {}
+        }
+    },
+    {
+        "model": "user_notifications.notification",
+        "pk": 2,
+        "fields":{
+            "name": "Odd User Notification",
+            "active": false,
+            "deliver_once": true,
+            "sites": [1],
+            "display_type": 200,
+            "message": {
+                "title": "Odd User",
+                "description": " If you are seeing this, you are an Odd user",
+                "accept_button": "Accept",
+                "accept_url": "notification-confirm",
+                "decline_button": "Decline",
+                "decline_url": "notification-decline"
+            },
+            "start_date": null,
+            "end_date": null,
+            "rules": ["OddRuleExample"],
+            "meta": {}
+        }
+    },
+    {
+        "model": "user_notifications.notification",
+        "pk": 3,
+        "fields":{
+            "name": "Expire after Date",
+            "active": false,
+            "deliver_once": true,
+            "sites": [1],
+            "display_type": 200,
+            "message": {
+                "title": "Expire Message after end date",
+                "description": " This Msg will expire after the end date",
+                "accept_button": "Accept",
+                "accept_url": "notification-confirm",
+                "decline_button": "Decline",
+                "decline_url": "notification-decline"
+            },
+            "start_date": null,
+            "end_date": "2050-06-30T02:38:30Z",
+            "rules": [],
+            "meta": {}
+        }
+    },
+    {
+        "model": "user_notifications.notification",
+        "pk": 4,
+        "fields":{
+            "name": "Msg After Start Date",
+            "active": false,
+            "deliver_once": true,
+            "sites": [1],
+            "display_type": 100,
+            "message": {
+                "title": "After Start Date",
+                "description": "This message will only show after the start Date",
+                "accept_button": "",
+                "accept_url": "",
+                "decline_button": "",
+                "decline_url": ""
+            },
+            "start_date": "2000-06-30T02:38:30Z",
+            "end_date": null,
+            "rules": [],
+            "meta": {}
+        }
+    },
+    {
+        "model": "user_notifications.notification",
+        "pk": 5,
+        "fields":{
+            "name": "Msg between dates",
+            "active": false,
+            "deliver_once": true,
+            "sites": [1],
+            "display_type": 100,
+            "message": {
+                "title": "Message Between Dates",
+                "description": "This message will only show between the start and end date.",
+                "accept_button": "",
+                "accept_url": "",
+                "decline_button": "",
+                "decline_url": ""
+            },
+            "start_date": "2000-06-30T02:38:30Z",
+            "end_date": "2050-06-30T02:38:30Z",
+            "rules": [],
+            "meta": {}
+        }
+    },
+    {
+        "model": "user_notifications.notification",
+        "pk": 6,
+        "fields":{
+            "name": "Ross is Odd Notification",
+            "active": false,
+            "deliver_once": false,
+            "sites": [1],
+            "display_type": 200,
+            "message": {
+                "title": "Ross is an Odd user",
+                "description": "This msg only shows up to users who are odd and have Ross as a last name",
+                "accept_button": "",
+                "accept_url": "",
+                "decline_button": "",
+                "decline_url": ""
+            },
+            "start_date": "2000-06-30T02:38:30Z",
+            "end_date": "2050-06-30T02:38:30Z",
+            "rules": ["OddRuleExample", "RossRuleExample"],
+            "meta": {}
+        }
     }
-},
-{
-    "model": "sites.site",
-    "pk": 2,
-    "fields": {
-        "domain": "example_two.com",
-        "name": "example_two.com"
-    }
-}
-]
+    ]
+    
