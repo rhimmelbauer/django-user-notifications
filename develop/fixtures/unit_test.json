@@ -44,7 +44,7 @@
         "fields":{
             "name": "Odd User Notification",
             "active": false,
-            "deliver_once": true,
+            "deliver_once": false,
             "sites": [1],
             "display_type": 200,
             "message": {

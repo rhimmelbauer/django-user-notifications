@@ -31,8 +31,14 @@ class CoreRuleConstructor(RuleConstructorBase):
         else:
             raise NotImplementedError()
 
+
 def apply_notification_rules(notification, user):
     apply_rules = []
+
+    # If no rules are found, assume that the notification wants to be delivered.
+    if not notification.rules:
+        notification.add_user_message(user)
+        return None
 
     for rule_name in notification.rules:
         rule = RuleConstructorBase.create_rule(notification, rule_name, user)
