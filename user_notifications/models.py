@@ -14,9 +14,9 @@ def set_default_message():
         "title": "",
         "description": "",
         "accept_button": "Accept",
-        "accept_url": "",
+        "accept_url": "user_notifications:notification-confirm",
         "decline_button": "Decline",
-        "decline_url": ""
+        "decline_url": "user_notifications:notification-decline"
     }
     return default
 
