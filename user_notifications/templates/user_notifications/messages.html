@@ -31,7 +31,7 @@
         {% else %}
         <div class="alert alert-dismissible {% if message.tags %} alert-{{ message.tags }} {% endif %}fade show">
             <a class="close" data-dismiss="alert">×</a>
-            {{ message }}
+            {{ message.meta.description }}
         </div>
         {% endif %}
     {% endfor %}
