@@ -3,12 +3,30 @@ from django.contrib.sites.models import Site
 from django.contrib.auth import get_user_model
 from user_messages.models import Message
 from user_notifications.models import Notification
-from user_notifications.rule_processor import NotificationRuleProcessor
+from user_notifications.rules import OddRuleExample, RossRuleExample
+from user_notifications.tests.example_rules import DoesNotApplyRuleExample, NoRuleNameExample
 
 
 User = get_user_model()
+    
 
-# Create your tests here.
+class RuleBaseTests(TestCase):
+
+    def test_rule_name_not_implemented_error(self):
+        with self.assertRaises(NotImplementedError) as error:
+            invalid_rule = NoRuleNameExample()
+        self.assertIn("passed notification variable is not a Notification type", error)
+
+    def test_rule_notification_incorrect_type_implemented_error(self):
+        with self.assertRaises(TypeError) as error:
+            invalid_rule = DoesNotApplyRuleExample("str instead of notification", User.objects.get(pk=1))
+        self.assertIn("user cannot be None type", error)
+
+    def test_does_rule_apply_not_implemented_error(self):
+        with self.assertRaises(NotImplementedError):
+            invalid_rule = DoesNotApplyRuleExample(Notification.objects.all().first(), User.objects.get(pk=1))
+            invalid_rule.does_rule_apply()
+        
 class RuleProcessorTests(TestCase):
 
     fixtures = ['user', 'unit_test']
