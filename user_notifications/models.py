@@ -1,3 +1,4 @@
+from datetime import time
 from django.contrib.sites.managers import CurrentSiteManager
 from django.contrib.sites.models import Site
 from django.db import models
@@ -7,7 +8,6 @@ from django.utils.translation import gettext_lazy as _
 from user_messages import api as user_messages
 from user_messages.models import Message
 
-from user_notifications.rules import RuleConstructor
 
 def set_default_site_id():
     return Site.objects.get_current()
@@ -74,10 +74,27 @@ class Notification(models.Model):
             return True
         return False
 
-    def apply_notifications(self, user):
-        apply_rules = []
-        for rule_name in self.rules:
-            rule = RuleConstructor.create_rule(self, rule_name, user)
-            apply_rules.append(rule.does_rule_apply())
-        if False not in apply_rules:
-            self.add_user_message(user)
+    def save_accepted(self, user):
+        if 'accepted' not in self.meta.keys():
+            self.meta['accepted'] = []
+        self.meta['accepted'].append({user.username: f"{timezone.now():%Y-%m-%d %H:%M:%S}"})
+        self.save()
+
+    def save_declined(self, user):
+        if 'declined' not in self.meta.keys():
+            self.meta['declined'] = []
+        self.meta['declined'].append({user.username: f"{timezone.now():%Y-%m-%d %H:%M:%S}"})
+        self.save()
+
+    def save_user_acknowledgement(self, user, accepted):
+        confirmed_timestamp = timezone.now()
+        user_message = Message.objects.get(user=user, message=self.name)
+        user_message.delivered_at = timezone.now()
+        user_message.deliver_once = True
+        user_message.meta['accepted'] = accepted
+        user_message.save()
+        if accepted:
+            self.save_accepted(user)
+        else:
+            self.save_declined(user)
+
