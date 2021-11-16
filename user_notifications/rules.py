@@ -14,7 +14,10 @@ class RuleBase:
         if not self.RULE_NAME:
             raise NotImplementedError
         if not type(notification) == Notification:
-            raise TypeError
+            raise TypeError("passed notification variable is not a Notification type")
+        if not user:
+            raise TypeError("user cannot be None type")
+
         self.notification = notification
         self.user = user
     
@@ -22,66 +25,30 @@ class RuleBase:
         return self.RULE_NAME
 
     def does_rule_apply(self):
-        raise NotImplemented
+        raise NotImplementedError()
 
     def gt(self, value):
-        raise NotImplemented
+        raise NotImplementedError()
 
     def gte(self, value):
-        raise NotImplemented
+        raise NotImplementedError()
 
     def lt(self, value):
-        raise NotImplemented
+        raise NotImplementedError()
 
     def lte(self, value):
-        raise NotImplemented
+        raise NotImplementedError()
 
 
-class OddRuleExample(RuleBase):
-    RULE_NAME = "OddRuleExample"
-    
-    def does_rule_apply(self):
-        if self.user.pk % 2:
-            return  True
-        return False
 
-class RossRuleExample(RuleBase):
-    RULE_NAME = "RossRuleExample"
-    
-    def does_rule_apply(self):
-        if self.user.last_name == "Ross":
-            return  True
-        return False
-
-
-class RuleConstructor:
+class RuleConstructorBase:
+    """
+    You can create you own rule contructor or implement another
+    design to implement and process rules. This is just an example"""
 
     def create_rule(notification, rule_name, user):
-        if rule_name == OddRuleExample.RULE_NAME:
-            return OddRuleExample(notification, user)
-        else:
-            raise NotImplemented
-
-def apply_notification_rules(notification, user):
-    apply_rules = []
-
-    for rule_name in notification.rules:
-        rule = RuleConstructor.create_rule(notification, rule_name, user)
-        apply_rules.append(rule.does_rule_apply())
-
-    if False not in apply_rules:
-        notification.add_user_message(user)
+        raise NotImplementedError()
 
 
-def check_for_new_notifications(site, user):
-    notifications_to_process = [
-        notification for notification in Notification.objects.filter(
-            Q(sites__in=[site]), Q(active=True), 
-            Q(start_date__lte=timezone.now()) | Q(start_date=None),
-            Q(end_date__gte=timezone.now()) | Q(end_date=None))
-        if not notification.already_exists(user)
-        ]
 
-    for notification in notifications_to_process:
-        apply_notification_rules(notification, user)
     
