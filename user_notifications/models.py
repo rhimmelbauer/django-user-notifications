@@ -76,22 +76,20 @@ class Notification(models.Model):
 
     def save_accepted(self, user):
         if 'accepted' not in self.meta.keys():
-            self.meta['accepted'] = []
-        self.meta['accepted'].append({user.username: f"{timezone.now():%Y-%m-%d %H:%M:%S}"})
+            self.meta['accepted'] = dict()
+        self.meta['accepted'][user.username] = f"{timezone.now():%Y-%m-%d %H:%M:%S}"
         self.save()
 
     def save_declined(self, user):
         if 'declined' not in self.meta.keys():
-            self.meta['declined'] = []
-        self.meta['declined'].append({user.username: f"{timezone.now():%Y-%m-%d %H:%M:%S}"})
+            self.meta['declined'] = dict()
+        self.meta['declined'][user.username] = f"{timezone.now():%Y-%m-%d %H:%M:%S}"
         self.save()
 
     def save_user_acknowledgement(self, user, accepted):
-        confirmed_timestamp = timezone.now()
         user_message = Message.objects.get(user=user, message=self.name)
         user_message.delivered_at = timezone.now()
         user_message.deliver_once = True
-        user_message.meta['accepted'] = accepted
         user_message.save()
         if accepted:
             self.save_accepted(user)

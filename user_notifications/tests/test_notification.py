@@ -2,6 +2,7 @@ from datetime import timedelta
 from django.contrib.auth import get_user_model
 from django.utils import timezone
 from django.test import TestCase, Client
+from user_messages.models import Message
 from user_notifications.models import Notification
 
 User = get_user_model()
@@ -38,3 +39,49 @@ class NotificationModelTests(TestCase):
     def test_queue_between_start_and_end_date(self):
         notification = Notification.objects.get(pk=5)
         self.assertTrue(notification.is_between_dates())
+    
+    def test_add_user_message_success(self):
+        notification = Notification.objects.get(pk=5)
+        self.assertFalse(Message.objects.all().count())
+        notification.add_user_message(User.objects.get(pk=1))
+        self.assertTrue(Message.objects.all().count())
+
+    def test_already_exists_true(self):
+        user = User.objects.get(pk=1)
+        notification = Notification.objects.get(pk=5)
+        self.assertFalse(Message.objects.all().count())
+        notification.add_user_message(user)
+        self.assertTrue(notification.already_exists(user))
+    
+    def test_already_exists_false(self):
+        notification = Notification.objects.get(pk=5)
+        self.assertFalse(notification.already_exists(User.objects.get(pk=1)))
+
+    def test_save_accepted(self):
+        user = User.objects.get(pk=1)
+        notification = Notification.objects.get(pk=5)
+        notification.save_accepted(user)
+        self.assertIn('accepted', notification.meta.keys())
+        self.assertIn(user.username, notification.meta['accepted'].keys())
+
+    def test_save_decline(self):
+        user = User.objects.get(pk=1)
+        notification = Notification.objects.get(pk=5)
+        notification.save_declined(user)
+        self.assertIn('declined', notification.meta.keys())
+        self.assertIn(user.username, notification.meta['declined'].keys())
+        
+    def test_save_user_acknowledgement(self):
+        user = User.objects.get(pk=1)
+        notification = Notification.objects.get(pk=5)
+        notification.add_user_message(user)
+        notification.save_user_acknowledgement(user, True)
+        self.assertIn('accepted', notification.meta.keys())
+        self.assertIn(user.username, notification.meta['accepted'].keys())
+
+        
+
+
+
+
+        
