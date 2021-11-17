@@ -143,9 +143,9 @@
                 "title": "Ross is an Odd user",
                 "description": "This msg only shows up to users who are odd and have Ross as a last name",
                 "accept_button": "",
-                "accept_url": "",
+                "accept_url": "notification-accept",
                 "decline_button": "",
-                "decline_url": ""
+                "decline_url": "notification-decline"
             },
             "start_date": "2000-06-30T02:38:30Z",
             "end_date": "2050-06-30T02:38:30Z",

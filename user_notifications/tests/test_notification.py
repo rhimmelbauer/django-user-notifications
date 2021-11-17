@@ -13,7 +13,6 @@ class NotificationModelTests(TestCase):
     fixtures = ['user', 'unit_test']
 
     def setUp(self):
-
         self.client = Client()
         self.user = User.objects.get(pk=1)
         self.client.force_login(self.user)

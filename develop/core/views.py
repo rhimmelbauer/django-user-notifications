@@ -1,5 +1,6 @@
 from django.http import Http404
 from django.shortcuts import redirect
+from django.urls.base import reverse_lazy
 from django.views.generic import ListView, View
 
 from user_notifications.models import Notification
@@ -15,15 +16,17 @@ class NotificationIndexView(ListView):
         return self.model.on_site.all()
 
 class AcceptNotification(View):
+    success_url = reverse_lazy('notification-index')
 
     def post(self, request, *args, **kwargs):
         if 'pk' not in request.POST:
             return Http404
         notification = Notification.objects.get(pk=request.POST['pk'])
         notification.save_user_acknowledgement(request.user, True)
-        return redirect(request.META.get('HTTP_REFERER'))
+        return redirect(request.META.get('HTTP_REFERER', self.success_url))
 
 class DeclineNotification(View):
+    success_url = reverse_lazy('notification-index')
 
     def post(self, request, *args, **kwargs):
         if 'pk' not in request.POST:
