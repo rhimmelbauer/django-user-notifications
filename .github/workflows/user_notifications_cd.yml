@@ -27,7 +27,7 @@ jobs:
     - name: Run Core Tests
       run: |
         cd develop
-        python manage.py test
+        python manage.py test core user_notifications
         python manage.py makemigrations --check --dry-run
       env: 
         DJANGO_DEBUG: 1
