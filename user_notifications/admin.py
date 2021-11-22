@@ -6,7 +6,7 @@ from user_notifications.models import Notification
 # MODEL ADMINS
 ###############
 class NotificationAdmin(admin.ModelAdmin):
-    fields = ('active', 'deliver_once', 'name', 'sites', 'display_type', 'message', 'rules')
+    fields = ('active', 'deliver_once', 'name', 'sites', 'display_type', 'message', 'rules', 'meta')
 
 
 admin.site.register(Notification, NotificationAdmin)
