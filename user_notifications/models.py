@@ -87,7 +87,7 @@ class Notification(models.Model):
         if user.username not in self.meta['accepted'][site.domain].keys():
             self.meta['accepted'][site.domain][user.username] = list()
 
-        self.meta['accepted'][user.username].append(f"{timezone.now():%Y-%m-%d %H:%M:%S}")
+        self.meta['accepted'][site.domain][user.username].append(f"{timezone.now():%Y-%m-%d %H:%M:%S}")
         self.save()
 
     def save_declined(self, user, site):
@@ -100,7 +100,7 @@ class Notification(models.Model):
         if user.username not in self.meta['declined'][site.domain].keys():
             self.meta['declined'][site.domain][user.username] = list()
 
-        self.meta['declined'][user.username].append(f"{timezone.now():%Y-%m-%d %H:%M:%S}")
+        self.meta['declined'][site.domain][user.username].append(f"{timezone.now():%Y-%m-%d %H:%M:%S}")
         self.save()
 
     def save_user_acknowledgement(self, user, site, accepted):

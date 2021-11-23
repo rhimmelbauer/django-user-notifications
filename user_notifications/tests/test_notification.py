@@ -1,5 +1,6 @@
 from datetime import timedelta
 from django.contrib.auth import get_user_model
+from django.contrib.sites.models import Site
 from django.utils import timezone
 from django.test import TestCase, Client
 from user_messages.models import Message
@@ -59,24 +60,24 @@ class NotificationModelTests(TestCase):
     def test_save_accepted(self):
         user = User.objects.get(pk=1)
         notification = Notification.objects.get(pk=5)
-        notification.save_accepted(user)
+        notification.save_accepted(user, Site.objects.get(pk=1))
         self.assertIn('accepted', notification.meta.keys())
-        self.assertIn(user.username, notification.meta['accepted'].keys())
+        self.assertIn(user.username, notification.meta['accepted'][Site.objects.get(pk=1).domain].keys())
 
     def test_save_decline(self):
         user = User.objects.get(pk=1)
         notification = Notification.objects.get(pk=5)
-        notification.save_declined(user)
+        notification.save_declined(user, Site.objects.get(pk=1))
         self.assertIn('declined', notification.meta.keys())
-        self.assertIn(user.username, notification.meta['declined'].keys())
+        self.assertIn(user.username, notification.meta['declined'][Site.objects.get(pk=1).domain].keys())
         
     def test_save_user_acknowledgement(self):
         user = User.objects.get(pk=1)
         notification = Notification.objects.get(pk=5)
         notification.add_user_message(user)
-        notification.save_user_acknowledgement(user, True)
+        notification.save_user_acknowledgement(user, Site.objects.get(pk=1), True)
         self.assertIn('accepted', notification.meta.keys())
-        self.assertIn(user.username, notification.meta['accepted'].keys())
+        self.assertIn(user.username, notification.meta['accepted'][Site.objects.get(pk=1).domain].keys())
 
         
 
