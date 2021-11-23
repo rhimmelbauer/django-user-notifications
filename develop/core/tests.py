@@ -152,4 +152,4 @@ class AcceptDeclineEndpointTests(TestCase):
 
         notification.refresh_from_db()
         self.assertIn('accepted', notification.meta.keys())
-        self.assertIn(self.user_one.username, notification.meta['accepted'].keys())
+        self.assertIn(self.user_one.username, notification.meta['accepted'][Site.objects.get(pk=1).domain].keys())

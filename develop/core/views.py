@@ -22,7 +22,7 @@ class AcceptNotification(View):
         if 'pk' not in request.POST:
             return Http404
         notification = Notification.objects.get(pk=request.POST['pk'])
-        notification.save_user_acknowledgement(request.user, True)
+        notification.save_user_acknowledgement(request.user, get_site_from_request(self.request), True)
         return redirect(request.META.get('HTTP_REFERER', self.success_url))
 
 class DeclineNotification(View):
@@ -32,5 +32,5 @@ class DeclineNotification(View):
         if 'pk' not in request.POST:
             return Http404
         notification = Notification.objects.get(pk=request.POST['pk'])
-        notification.save_user_acknowledgement(request.user, False)
+        notification.save_user_acknowledgement(request.user, get_site_from_request(self.request), False)
         return redirect(request.META.get('HTTP_REFERER', self.success_url))
