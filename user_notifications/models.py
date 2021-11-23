@@ -104,6 +104,8 @@ class Notification(models.Model):
         self.save()
 
     def save_user_acknowledgement(self, user, site, accepted):
+        if self.deliver_once:
+            return None     # Notifications should be deliver_once=False to work as an ack
         user_message = Message.objects.get(user=user, message=self.name, deliver_once=False, delivered_at__isnull=True)
         user_message.delivered_at = timezone.now()
         user_message.deliver_once = True
