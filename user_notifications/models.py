@@ -2,6 +2,7 @@ from datetime import time
 from django.contrib.sites.managers import CurrentSiteManager
 from django.contrib.sites.models import Site
 from django.db import models
+from django.core.exceptions import ObjectDoesNotExist, MultipleObjectsReturned
 from django.db.models.deletion import CASCADE
 from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
@@ -106,7 +107,13 @@ class Notification(models.Model):
     def save_user_acknowledgement(self, user, site, accepted):
         if self.deliver_once:
             return None     # Notifications should be deliver_once=False to work as an ack
-        user_message = Message.objects.get(user=user, message=self.name, deliver_once=False, delivered_at__isnull=True)
+        try:
+            user_message = Message.objects.get(user=user, message=self.name, deliver_once=False, delivered_at__isnull=True)
+        except ObjectDoesNotExist as error:
+            return None
+        except MultipleObjectsReturned as error:
+            user_message = Message.objects.filter(user=user, message=self.name, deliver_once=False, delivered_at__isnull=True).order_by('created_at').first()
+
         user_message.delivered_at = timezone.now()
         user_message.deliver_once = True
         user_message.save()
