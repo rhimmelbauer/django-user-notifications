@@ -104,7 +104,7 @@ class Notification(models.Model):
         self.save()
 
     def save_user_acknowledgement(self, user, site, accepted):
-        user_message = Message.objects.get(user=user, message=self.name)
+        user_message = Message.objects.get(user=user, message=self.name, deliver_once=False, delivered_at__isnull=False)
         user_message.delivered_at = timezone.now()
         user_message.deliver_once = True
         user_message.save()
