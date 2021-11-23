@@ -73,8 +73,9 @@ class NotificationModelTests(TestCase):
         
     def test_save_user_acknowledgement(self):
         user = User.objects.get(pk=1)
-        notification = Notification.objects.get(pk=5)
+        notification = Notification.objects.get(pk=2)
         notification.add_user_message(user)
+        notification.refresh_from_db()
         notification.save_user_acknowledgement(user, Site.objects.get(pk=1), True)
         self.assertIn('accepted', notification.meta.keys())
         self.assertIn(user.username, notification.meta['accepted'][Site.objects.get(pk=1).domain].keys())
