@@ -33,8 +33,7 @@ package_metadata = {
         'Development Status :: 2 - Pre-Alpha',
         'Intended Audience :: Developers',
         'Programming Language :: Python :: 3 :: Only',
-        'Programming Language :: Python :: 3.6',
-        'Programming Language :: Python :: 3.7',
+        'Programming Language :: Python :: 3.8',
     ],
     'keywords': ['django', 'app', 'messages'],
 }
@@ -43,9 +42,9 @@ setup(
     packages=find_packages(),
     package_data={'user_notifications': ['templates/user_notifications/*.html', 'templates/user_notifications/*/*.html']},
     include_package_data=True,
-    python_requires=">=3.6",
+    python_requires=">=3.8",
     install_requires=[
-        'Django>=3.1,<3.2',
+        'Django>=3.2,<4.1',
         'django-autoslug',
         'django-extensions',
         "django-user-messages",
