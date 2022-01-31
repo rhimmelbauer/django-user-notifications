@@ -1,0 +1,67 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2022-01-31 20:11+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+#: models.py:28
+msgid "Bootstrap Alert"
+msgstr "ブートストラップアラート"
+
+#: models.py:29
+msgid "Modal"
+msgstr "モーダル"
+
+#: models.py:47
+msgid "Notification Name"
+msgstr "通知名"
+
+#: models.py:48
+msgid "Active"
+msgstr "アクティブ"
+
+#: models.py:49
+msgid "Sites"
+msgstr "サイト"
+
+#: models.py:50
+msgid "Message Type"
+msgstr "メッセージタイプ"
+
+#: models.py:51
+msgid "Message Content"
+msgstr "メッセージコンテンツ"
+
+#: models.py:52
+msgid "Deliver Once"
+msgstr "一度配信"
+
+#: models.py:53
+msgid "Start Date"
+msgstr "開始日"
+
+#: models.py:53
+msgid "Notification Start Date?"
+msgstr "通知開始日？"
+
+#: models.py:54
+msgid "End Date"
+msgstr "終了日"
+
+#: models.py:54
+msgid "Notification End Date?"
+msgstr "通知終了日？"
