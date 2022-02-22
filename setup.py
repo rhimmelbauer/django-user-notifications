@@ -73,6 +73,7 @@ setup(
             'Sphinx',
             'rstcheck',
             'sphinx-rtd-theme'
+            'keyrings.google-artifactregistry-auth'
         ],
     },
     **package_metadata
