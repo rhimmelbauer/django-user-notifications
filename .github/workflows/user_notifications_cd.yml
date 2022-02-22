@@ -32,5 +32,10 @@ jobs:
         python manage.py makemigrations --check --dry-run
       env: 
         DJANGO_DEBUG: 1
-        # DATABASE_URL: postgres://postgres:postgres@127.0.0.1:5432/vendor  # Using default SQLite
+    - id: 'auth'
+      name: 'Authenticate to Google Cloud'
+      uses: 'google-github-actions/auth@v0'
+      with:
+        credentials_json: '${{ secrets.gcloud_key }}'
+
 
