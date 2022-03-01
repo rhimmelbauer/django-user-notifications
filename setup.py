@@ -64,6 +64,7 @@ setup(
             'wheel',
             'twine',
             'm2r',
+            'keyrings.google-artifactregistry-auth'
         ],
         'docs': [
             'recommonmark',

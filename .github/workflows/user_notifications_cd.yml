@@ -24,7 +24,7 @@ jobs:
         python -m pip install --upgrade pip
         python -m pip install mistune==0.8.4
         python -m pip install m2r
-        python -m pip install -e .[dev,test]
+        python -m pip install -e .[dev,test,build]
     - name: Run Core Tests
       run: |
         cd develop
@@ -32,5 +32,6 @@ jobs:
         python manage.py makemigrations --check --dry-run
       env: 
         DJANGO_DEBUG: 1
-        # DATABASE_URL: postgres://postgres:postgres@127.0.0.1:5432/vendor  # Using default SQLite
+
+
 
