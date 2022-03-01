@@ -1,6 +1,9 @@
+{% load i18n %}
+
 {% if messages %}
     {% for message in messages %}
-        {% if message.meta.display_type == 200 %} {# Info Modal #}
+        {# Info Modal #}
+        {% if message.meta.display_type == 200 %} 
         <div id="notification-modal" class="modal" tabindex="-1">
             <div class="modal-dialog">
                 <div class="modal-content">
@@ -19,7 +22,8 @@
                 </div>
             </div>
         </div>
-        {% elif message.meta.display_type == 201 %} {# Form Modal #}
+        {# Form Modal #}
+        {% elif message.meta.display_type == 201 %}
         <div id="notification-modal" class="modal" tabindex="-1">
             <div class="modal-dialog">
                 <div class="modal-content">
@@ -55,7 +59,6 @@
             {% else %}
                 {{ message }}
             {% endif %}
-            
         </div>
         {% endif %}
     {% endfor %}

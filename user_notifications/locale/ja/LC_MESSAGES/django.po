@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-03-01 17:15+0000\n"
+"POT-Creation-Date: 2022-03-01 17:26+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -70,6 +70,6 @@ msgstr "終了日"
 msgid "Notification End Date?"
 msgstr "通知終了日？"
 
-#: templates/user_notifications/messages.html:17
+#: templates/user_notifications/messages.html:20
 msgid "Close"
 msgstr "選ぶ"
