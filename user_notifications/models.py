@@ -26,7 +26,8 @@ def set_default_message():
 
 class DisplayType(models.IntegerChoices):
     BOOTSTRAP_ALERT = 100, _("Bootstrap Alert")
-    MODAL = 200, _("Modal")
+    MODAL_INFO = 200, _("Modal Info")
+    MODAL_FORM = 201, _("Modal Form")
 
 
 class Notification(models.Model):

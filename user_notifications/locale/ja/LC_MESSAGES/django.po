@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-01-31 20:11+0000\n"
+"POT-Creation-Date: 2022-03-01 17:15+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -23,45 +23,53 @@ msgid "Bootstrap Alert"
 msgstr "ブートストラップアラート"
 
 #: models.py:29
-msgid "Modal"
-msgstr "モーダル"
+msgid "Modal Info"
+msgstr "モーダル情報"
 
-#: models.py:47
+#: models.py:30
+msgid "Modal Form"
+msgstr "モーダルフォーム"
+
+#: models.py:48
 msgid "Notification Name"
 msgstr "通知名"
 
-#: models.py:48
+#: models.py:49
 msgid "Active"
 msgstr "アクティブ"
 
-#: models.py:49
+#: models.py:50
 msgid "Sites"
 msgstr "サイト"
 
-#: models.py:50
+#: models.py:51
 msgid "Message Type"
 msgstr "メッセージタイプ"
 
-#: models.py:51
+#: models.py:52
 msgid "Message Content"
 msgstr "メッセージコンテンツ"
 
-#: models.py:52
+#: models.py:53
 msgid "Deliver Once"
 msgstr "一度配信"
 
-#: models.py:53
+#: models.py:54
 msgid "Start Date"
 msgstr "開始日"
 
-#: models.py:53
+#: models.py:54
 msgid "Notification Start Date?"
 msgstr "通知開始日？"
 
-#: models.py:54
+#: models.py:55
 msgid "End Date"
 msgstr "終了日"
 
-#: models.py:54
+#: models.py:55
 msgid "Notification End Date?"
 msgstr "通知終了日？"
+
+#: templates/user_notifications/messages.html:17
+msgid "Close"
+msgstr "選ぶ"
