@@ -42,7 +42,7 @@ setup(
     packages=find_packages(),
     package_data={'user_notifications': ['templates/user_notifications/*.html', 'templates/user_notifications/*/*.html']},
     include_package_data=True,
-    python_requires=">=3.8",
+    python_requires=">=3.7",
     install_requires=[
         'Django>=3.0,<4.1',
         'django-autoslug',
