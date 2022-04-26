@@ -28,6 +28,7 @@ class DisplayType(models.IntegerChoices):
     BOOTSTRAP_ALERT = 100, _("Bootstrap Alert")
     MODAL_INFO = 200, _("Modal Info")
     MODAL_FORM = 201, _("Modal Form")
+    ACTIVITY_FEED = 300, _("Activity Feed")
 
 
 class Notification(models.Model):
