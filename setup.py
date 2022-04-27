@@ -44,7 +44,7 @@ setup(
     include_package_data=True,
     python_requires=">=3.7",
     install_requires=[
-        'Django>=3.0,<4.1',
+        'Django>=3.0,<4.0',
         'django-autoslug',
         'django-extensions',
         "django-user-messages",
