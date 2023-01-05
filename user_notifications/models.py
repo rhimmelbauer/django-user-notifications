@@ -1,9 +1,7 @@
-from datetime import time
 from django.contrib.sites.managers import CurrentSiteManager
 from django.contrib.sites.models import Site
 from django.db import models
 from django.core.exceptions import ObjectDoesNotExist, MultipleObjectsReturned
-from django.db.models.deletion import CASCADE
 from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
 from user_messages import api as user_messages
@@ -63,9 +61,11 @@ class Notification(models.Model):
     def __str__(self):
         return self.name
 
-    def add_user_message(self, user):
+    def add_user_message(self, user, site_id=None):
         self.message['display_type'] = self.display_type
         self.message['pk'] = self.pk
+        if site_id:
+            self.message['site_id'] = site_id
         user_messages.info(user, self.name, deliver_once=self.deliver_once, meta=self.message)
     
     def already_exists(self, user):
