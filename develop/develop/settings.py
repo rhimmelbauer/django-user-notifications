@@ -62,6 +62,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'allauth.account.middleware.AccountMiddleware',
 ]
 
 ROOT_URLCONF = 'develop.urls'
@@ -114,6 +115,9 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 ACCOUNT_EMAIL_REQUIRED = True
+
+# Fake e-mail backend for development
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 
 FIXTURE_DIRS = (
