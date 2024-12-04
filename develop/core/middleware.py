@@ -13,7 +13,10 @@ class NotificationRedirctMiddleware:
     def __call__(self, request):
         # Code to be executed for each request before
         # the view (and later middleware) are called.
-        site = Site.objects.get_current()
+        if getattr(request, "site", None):
+            site = request.site
+        else:
+            site = Site.objects.get_current()
         notification = Notification.objects.filter(
             Q(sites__in=[site]), Q(active=True), Q(display_type=DisplayType.REDIRECT),
             Q(start_date__lte=timezone.now()) | Q(start_date=None),
