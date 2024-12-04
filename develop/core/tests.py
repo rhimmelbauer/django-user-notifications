@@ -153,3 +153,37 @@ class AcceptDeclineEndpointTests(TestCase):
         notification.refresh_from_db()
         self.assertIn('accepted', notification.meta.keys())
         self.assertIn(self.user_one.username, notification.meta['accepted'][Site.objects.get(pk=1).domain].keys())
+
+
+class RedirectTests(TestCase):
+
+    fixtures = ['user', 'unit_test']
+
+    def setUp(self):
+        self.user_one = User.objects.get(pk=1)
+        self.client = Client()
+        self.index_url = reverse('notification-index')
+
+    def test_redirect_path_name_success(self):
+        notification = Notification.objects.get(pk=7)
+        notification.active = True
+        notification.save()
+
+        response = self.client.post(reverse('account_login'), {"login": "rob", "password": "django321"})
+        redirect_to = notification.message["redirect_to"]
+        redirect_url = reverse(redirect_to)
+
+        self.assertEquals(response.status_code, 302)
+        self.assertEquals(response.url, redirect_url)
+
+    def test_redirect_url_success(self):
+        notification = Notification.objects.get(pk=8)
+        notification.active = True
+        notification.save()
+
+        response = self.client.post(reverse('account_login'), {"login": "rob", "password": "django321"})
+        redirect_url = notification.message["redirect_to"]
+
+        self.assertEquals(response.status_code, 302)
+        self.assertEquals(response.url, redirect_url)
+

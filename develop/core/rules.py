@@ -21,6 +21,14 @@ class RossRuleExample(RuleBase):
             return  True
         return False
 
+class RedirectRuleExample(RuleBase):
+    RULE_NAME = "RedirectRuleExample"
+    
+    def does_rule_apply(self):
+        if self.user.username == "rob":
+            return  True
+        return False
+
 class CoreRuleConstructor(RuleConstructorBase):
 
     def create_rule(notification, rule_name, user):
@@ -28,6 +36,8 @@ class CoreRuleConstructor(RuleConstructorBase):
             return OddRuleExample(notification, user)
         elif rule_name == RossRuleExample.RULE_NAME:
             return RossRuleExample(notification, user)
+        elif rule_name == RedirectRuleExample.RULE_NAME:
+            return RedirectRuleExample(notification, user)
         else:
             raise NotImplementedError()
 
