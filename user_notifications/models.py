@@ -27,6 +27,9 @@ class DisplayType(models.IntegerChoices):
     MODAL_INFO = 200, _("Modal Info")
     MODAL_FORM = 201, _("Modal Form")
     ACTIVITY_FEED = 300, _("Activity Feed")
+    # REDIRECT expects a "redirect_to" attribute in the message
+    # which can be a url path or a route path name for reverse
+    REDIRECT = 400, _("Redirect") 
 
 
 class Notification(models.Model):

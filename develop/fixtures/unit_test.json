@@ -152,6 +152,42 @@
             "rules": ["OddRuleExample", "RossRuleExample"],
             "meta": {}
         }
+    },
+    {
+        "model": "user_notifications.notification",
+        "pk": 7,
+        "fields":{
+            "name": "Redirect Notification - Path Name",
+            "active": false,
+            "deliver_once": false,
+            "sites": [1],
+            "display_type": 400,
+            "message": {
+                "redirect_to": "account_logout"
+            },
+            "start_date": "2000-06-30T02:38:30Z",
+            "end_date": "2050-06-30T02:38:30Z",
+            "rules": ["RedirectRuleExample"],
+            "meta": {}
+        }
+    },
+    {
+        "model": "user_notifications.notification",
+        "pk": 8,
+        "fields":{
+            "name": "Redirect Notification - URL",
+            "active": false,
+            "deliver_once": false,
+            "sites": [1],
+            "display_type": 400,
+            "message": {
+                "redirect_to": "/accounts/logout/"
+            },
+            "start_date": "2000-06-30T02:38:30Z",
+            "end_date": "2050-06-30T02:38:30Z",
+            "rules": ["RedirectRuleExample"],
+            "meta": {}
+        }
     }
     ]
     
